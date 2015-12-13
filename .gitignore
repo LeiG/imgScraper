@@ -1,0 +1,7 @@
+env/
+TODO.md
+images.db
+brands/
+*.pyc
+imageScraper/__pycache__
+*.DS_Store
