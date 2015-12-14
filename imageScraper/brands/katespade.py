@@ -54,7 +54,7 @@ class KateSpadeScraper(BaseScraper):
         # not on sale
         except:
             price = bsObj.find('span', {'class':'price-sales'}).text
-            price = re.search('\$([0-9\.]+?)$', price).group(1)
+            price = re.search('\$([0-9\.,]+?)$', price).group(1)
 
             salePrice = price
             return math.ceil(float(price)), math.ceil(float(salePrice))

@@ -10,6 +10,7 @@ import datetime
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 from collections import defaultdict
+from sqlalchemy import and_
 
 from .defTable import Image
 
@@ -89,8 +90,7 @@ class BaseScraper(object):
 
     def saveRecord(self, category, code, url, price, salePrice):
         # create new record
-        if self.session.query(Image).filter((Image.brand == self.brand) &
-                                            (Image.code == code)).count() == 0:
+        if self.session.query(Image).filter(and_((Image.brand == self.brand), (Image.code == code))).count() == 0:
 
             imagePath = self.getImagePath(category, code, price, salePrice)
             self.saveImages(url, imagePath)
@@ -108,8 +108,7 @@ class BaseScraper(object):
 
         # update existing record
         else:
-            tmpProduct = self.session.query(Image).filter_by((Image.brand == self.brand) &
-                                                             (Image.code == code)).one()
+            tmpProduct = self.session.query(Image).filter(and_((Image.brand == self.brand), (Image.code == code))).one()
             # skip if price doesn't change
             if tmpProduct.price == price and tmpProduct.salePrice == salePrice:
                 pass
