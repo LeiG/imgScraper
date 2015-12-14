@@ -20,15 +20,14 @@ HEADER = {"User-Agent" : "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleW
 
 
 class BaseScraper(object):
-    def __init__(self, url, brand, session, header = HEADER):
+    def __init__(self, mainPath, session, header = HEADER):
         self.header = header
-        self.url = url
-        self.brand = brand
+        self.mainPath = mainPath
         self.session = session
         self.categoryList = defaultdict(str)
 
         # create folder for the brand if not exist
-        self.brandPath = os.path.join('./brands', brand)
+        self.brandPath = os.path.join(self.mainPath, self.brand)
         if not os.path.exists(self.brandPath):
             os.mkdir(self.brandPath)
 

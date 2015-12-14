@@ -8,11 +8,13 @@ from bs4 import BeautifulSoup
 
 from ..base import BaseScraper
 
-HOMEURL = 'http://www.coach.com/'
-BRAND = 'Coach'
-
 
 class CoachScraper(BaseScraper):
+    def __init__(self, *args, **kwargs):
+        self.url = 'http://www.coach.com/'
+        self.brand = 'Coach'
+        super(CoachScraper, self).__init__(*args, **kwargs)
+
     def getCategoryList(self, bsObj):
         for cat in bsObj.findAll('a', {'data-id':re.compile('^category-'), 'class':'level-2'}):
             catName = re.sub('category-', '', cat.attrs['data-id'])
@@ -56,4 +58,3 @@ class CoachScraper(BaseScraper):
 
             salePrice = price
             return math.ceil(float(price)), price
-

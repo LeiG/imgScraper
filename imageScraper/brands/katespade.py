@@ -8,11 +8,13 @@ from bs4 import BeautifulSoup
 
 from ..base import BaseScraper
 
-HOMEURL = 'https://www.katespade.com/'
-BRAND = 'KateSpade'
-
 
 class KateSpadeScraper(BaseScraper):
+    def __init__(self, *args, **kwargs):
+        self.url = 'https://www.katespade.com/'
+        self.brand = 'KateSpade'
+        super(KateSpadeScraper, self).__init__(*args, **kwargs)
+
     def getCategoryList(self, bsObj):
         for cat in bsObj.findAll('a', {'class':'level-2'}):
             catUrl = cat.attrs['href']

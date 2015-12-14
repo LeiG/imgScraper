@@ -16,13 +16,14 @@ if __name__ == "__main__":
     session = Session()
 
     # create folder
-    if not os.path.exists('./brands'):
-        os.mkdir('./brands')
+    mainPath = os.path.expanduser('~/Google Drive/Coco shopping/brands')
+    if not os.path.exists(mainPath):
+        os.mkdir(mainPath)
 
     # scrape coach
-    # coachScraper = coach.CoachScraper(coach.HOMEURL, coach.BRAND, session)
+    # coachScraper = coach.CoachScraper(mainPath = mainPath, session = session)
     # coachScraper.traverseSite()
 
     # scrape katespade
-    katespadeScraper = katespade.KateSpadeScraper(katespade.HOMEURL, katespade.BRAND, session)
+    katespadeScraper = katespade.KateSpadeScraper(mainPath = mainPath, session = session)
     katespadeScraper.traverseSite()
