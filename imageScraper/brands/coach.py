@@ -52,9 +52,12 @@ class CoachScraper(BaseScraper):
 
             return math.ceil(float(price)), math.ceil(float(salePrice))
         # not on sale
-        except:
-            price = bsObj.find('span', {'class':'price-sales'}).text
-            price = re.search(r'\$([0-9]+?)\n', price, re.M).group(1)
+        except AttributeError:
+            try:
+                price = bsObj.find('span', {'class':'price-sales'}).text
+                price = re.search(r'\$([0-9]+?)\n', price, re.M).group(1)
+            except AttributeError:
+                price = 0
 
             salePrice = price
-            return math.ceil(float(price)), price
+            return math.ceil(float(price)), math.ceil(float(salePrice))

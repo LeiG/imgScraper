@@ -42,22 +42,25 @@ class KateSpadeScraper(BaseScraper):
         return imageList
 
     def getPrice(self, bsObj):
-        # if on sale
+        # on sale
         try:
             price = bsObj.find('span', {'class':'price-standard'}).text
             price = re.search('\$([0-9\.,]+?)$', price).group(1)
-            price = re.sub(',','', price)
+            price = re.sub(',', '', price)
 
             salePrice = bsObj.find('span', {'class':'price-sales'}).text
-            salePrice = re.search('\$([0-9\.]+?)$', salePrice).group(1)
-            salePrice = re.sub(',','', salePrice)
+            salePrice = re.search('\$([0-9\.,]+?)$', salePrice).group(1)
+            salePrice = re.sub(',', '', salePrice)
 
             return math.ceil(float(price)), math.ceil(float(salePrice))
         # not on sale
-        except:
-            price = bsObj.find('span', {'class':'price-sales'}).text
-            price = re.search('\$([0-9\.,]+?)$', price).group(1)
-            price = re.sub(',','', price)
-
+        except AttributeError:
+            try:
+                price = bsObj.find('span', {'class':'price-sales'}).text
+                price = re.search('\$([0-9\.,]+?)$', price).group(1)
+                price = re.sub(',', '', price)
+            except AttributeError:
+                price = 0
+                
             salePrice = price
             return math.ceil(float(price)), math.ceil(float(salePrice))
