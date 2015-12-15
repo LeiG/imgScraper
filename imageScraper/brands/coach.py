@@ -18,7 +18,11 @@ class CoachScraper(BaseScraper):
     def getCategoryList(self, bsObj):
         for cat in bsObj.findAll('a', {'data-id':re.compile('^category-'), 'class':'level-2'}):
             catName = re.sub('category-', '', cat.attrs['data-id'])
-            self.categoryList[catName] = cat.attrs['href']
+            # hard coded hacky exception
+            if catName == 'men-gifts':
+                self.categoryList[catName] = 'https://www.coach.com/shop/gifts#gifts-for-men-landing'
+            else:
+                self.categoryList[catName] = cat.attrs['href']
 
     def getProductList(self, bsObj):
         productList = defaultdict(str)
@@ -28,7 +32,7 @@ class CoachScraper(BaseScraper):
                 try:
                     prodName = re.search('/([A-Za-z0-9]+?)\.html', prodUrl).group(1)
                     productList[prodName] = prodUrl
-                except AttributeEr:
+                except AttributeError:
                     pass
         return productList
 

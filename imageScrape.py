@@ -21,8 +21,8 @@ if __name__ == "__main__":
         os.mkdir(mainPath)
 
     # scrape coach
-    # coachScraper = coach.CoachScraper(mainPath = mainPath, session = session)
-    # coachScraper.traverseSite()
+    coachScraper = coach.CoachScraper(mainPath = mainPath, session = session)
+    coachScraper.traverseSite()
 
     # scrape katespade
     katespadeScraper = katespade.KateSpadeScraper(mainPath = mainPath, session = session)

@@ -77,6 +77,10 @@ class BaseScraper(object):
         imageList = self.getImageList(bsObj)
 
         for key, value in imageList.items():
+            # save the main image separately in the category folder
+            if key == '0':
+                with open(imagePath + '.png', 'wb') as content:
+                    content.write(requests.get(value).content)
             with open(os.path.join(imagePath, key + '.png'), 'wb') as content:
                 content.write(requests.get(value).content)
 
